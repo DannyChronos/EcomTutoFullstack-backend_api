@@ -1,12 +1,6 @@
-{
-  name: 'Danny Chronos',
-  email: 'dannychronos@gmail.com',
-  password: 'password',
-  role: 'admin'
-}
-
 import { integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+import z from "zod";
 
 
 export const usersTable = pgTable('users', {
@@ -21,3 +15,11 @@ export const usersTable = pgTable('users', {
 export const createUserSchema = createInsertSchema(usersTable).omit({
     role: true
 })
+
+export const loginSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(1, "Password is required")
+})
+
+type ApiInsertUserData = z.infer<typeof createUserSchema>;
+export type LoginData = z.infer<typeof loginSchema>;

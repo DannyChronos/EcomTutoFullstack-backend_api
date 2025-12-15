@@ -4,7 +4,9 @@ import { z, ZodError } from 'zod';
 export function validateData(schema: z.ZodObject<any, any>) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body);
+      const validatedData = schema.parse(req.body);
+      // Replace req.body with ONLY the validated data (strips any extra fields)
+      req.body = validatedData;
       next();
     } catch (error) {
       if (error instanceof ZodError) {

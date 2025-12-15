@@ -3,6 +3,7 @@ import express, {json, urlencoded} from "express";
 // Import Router
 
 import productsRoutes from "./routes/products/index";
+import authRoutes from "./routes/auth/index"
 
 const app = express();
 const port = 3000;
@@ -16,7 +17,7 @@ app.get("/", (req, res) => {
 
 
 app.use('/products', productsRoutes); // product api routes
-
+app.use('/auth', authRoutes); // auth api routes
 
 
 
