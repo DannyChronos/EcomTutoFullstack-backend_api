@@ -14,6 +14,7 @@ router.post('/register', validateData(createUserSchema), async (req, res) => {
 
     try {
         const data = req.body;
+        console.log(data);
         const salt = await brcypt.genSalt(10);
 
         const hashedPassword = await brcypt.hash(data.password, salt)

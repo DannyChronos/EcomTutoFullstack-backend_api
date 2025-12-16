@@ -64,3 +64,14 @@ export function verifyAdminToken(req: AuthRequest, res: Response, next: NextFunc
     next();
   });
 }
+
+export function verifySellerToken(req: AuthRequest, res: Response, next: NextFunction) {
+  verifyToken(req, res, () => {
+    if (req.user?.role !== 'seller' || 'admin') {
+      return res.status(403).json({
+        message: 'Access denied. Admin privileges required.'
+      });
+    }
+    next();
+  });
+}
